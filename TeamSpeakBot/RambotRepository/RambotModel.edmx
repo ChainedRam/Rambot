@@ -1,0 +1,706 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="RAMBOTModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ClipUse">
+          <Key>
+            <PropertyRef Name="Rid" />
+            <PropertyRef Name="ClipName" />
+          </Key>
+          <Property Name="Rid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ClipName" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="Count" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CommandUse">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Rid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Time" Type="datetime" Nullable="false" />
+          <Property Name="Command" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="arg" Type="varchar" MaxLength="255" />
+          <Property Name="argCount" Type="int" />
+        </EntityType>
+        <EntityType Name="DiscordRam">
+          <Key>
+            <PropertyRef Name="did" />
+          </Key>
+          <Property Name="did" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="username" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DiscordUser">
+          <Key>
+            <PropertyRef Name="did" />
+          </Key>
+          <Property Name="did" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="Rid" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LoginClip">
+          <Key>
+            <PropertyRef Name="Rid" />
+          </Key>
+          <Property Name="Rid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ClipName" Type="varchar" MaxLength="64" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RamActivityLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Rid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Time" Type="datetime" Nullable="false" />
+          <Property Name="Activity" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Param" Type="varchar" MaxLength="60" />
+          <Property Name="By" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RamErrorLog">
+          <Key>
+            <PropertyRef Name="time" />
+          </Key>
+          <Property Name="time" Type="datetime" Nullable="false" />
+          <Property Name="stack" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="message" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="by" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="line" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="ramName" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="serverId" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="RamLinks">
+          <Key>
+            <PropertyRef Name="Rid" />
+            <PropertyRef Name="RidLink" />
+          </Key>
+          <Property Name="Rid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="RidLink" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="IsBound" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RamUser">
+          <Key>
+            <PropertyRef Name="Rid" />
+          </Key>
+          <Property Name="Rid" Type="uniqueidentifier" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="ServerId" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="TeamSpeakLocalUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Uid" Type="varchar" MaxLength="40" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TeamSpeakRam">
+          <Key>
+            <PropertyRef Name="tsuid" />
+          </Key>
+          <Property Name="tsuid" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="username" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TeamSpeakUser">
+          <Key>
+            <PropertyRef Name="TSuid" />
+          </Key>
+          <Property Name="Rid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="TSuid" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="TSlid" Type="int" />
+          <Property Name="Nickname" Type="varchar" MaxLength="40" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__ClipUse__Rid__4F7CD00D">
+          <End Role="RamUser" Type="Self.RamUser" Multiplicity="1" />
+          <End Role="ClipUse" Type="Self.ClipUse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RamUser">
+              <PropertyRef Name="Rid" />
+            </Principal>
+            <Dependent Role="ClipUse">
+              <PropertyRef Name="Rid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CommandUse__Rid__5070F446">
+          <End Role="RamUser" Type="Self.RamUser" Multiplicity="1" />
+          <End Role="CommandUse" Type="Self.CommandUse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RamUser">
+              <PropertyRef Name="Rid" />
+            </Principal>
+            <Dependent Role="CommandUse">
+              <PropertyRef Name="Rid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DiscordUser__Rid__534D60F1">
+          <End Role="RamUser" Type="Self.RamUser" Multiplicity="1" />
+          <End Role="DiscordUser" Type="Self.DiscordUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RamUser">
+              <PropertyRef Name="Rid" />
+            </Principal>
+            <Dependent Role="DiscordUser">
+              <PropertyRef Name="Rid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__LoginClip__Rid__5165187F">
+          <End Role="RamUser" Type="Self.RamUser" Multiplicity="1" />
+          <End Role="LoginClip" Type="Self.LoginClip" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="RamUser">
+              <PropertyRef Name="Rid" />
+            </Principal>
+            <Dependent Role="LoginClip">
+              <PropertyRef Name="Rid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__RamActivity__Rid__52593CB8">
+          <End Role="RamUser" Type="Self.RamUser" Multiplicity="1" />
+          <End Role="RamActivityLog" Type="Self.RamActivityLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RamUser">
+              <PropertyRef Name="Rid" />
+            </Principal>
+            <Dependent Role="RamActivityLog">
+              <PropertyRef Name="Rid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__RamLinks__Rid__5441852A">
+          <End Role="RamUser" Type="Self.RamUser" Multiplicity="1" />
+          <End Role="RamLinks" Type="Self.RamLinks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RamUser">
+              <PropertyRef Name="Rid" />
+            </Principal>
+            <Dependent Role="RamLinks">
+              <PropertyRef Name="Rid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__RamLinks__RidLin__5535A963">
+          <End Role="RamUser" Type="Self.RamUser" Multiplicity="1" />
+          <End Role="RamLinks" Type="Self.RamLinks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RamUser">
+              <PropertyRef Name="Rid" />
+            </Principal>
+            <Dependent Role="RamLinks">
+              <PropertyRef Name="RidLink" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TeamSpeakLo__Uid__5BE2A6F2">
+          <End Role="TeamSpeakUser" Type="Self.TeamSpeakUser" Multiplicity="1" />
+          <End Role="TeamSpeakLocalUser" Type="Self.TeamSpeakLocalUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TeamSpeakUser">
+              <PropertyRef Name="TSuid" />
+            </Principal>
+            <Dependent Role="TeamSpeakLocalUser">
+              <PropertyRef Name="Uid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TeamSpeakUs__Rid__4E88ABD4">
+          <End Role="RamUser" Type="Self.RamUser" Multiplicity="1" />
+          <End Role="TeamSpeakUser" Type="Self.TeamSpeakUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RamUser">
+              <PropertyRef Name="Rid" />
+            </Principal>
+            <Dependent Role="TeamSpeakUser">
+              <PropertyRef Name="Rid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="RAMBOTModelStoreContainer">
+          <EntitySet Name="ClipUse" EntityType="Self.ClipUse" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CommandUse" EntityType="Self.CommandUse" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DiscordRam" EntityType="Self.DiscordRam" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DiscordUser" EntityType="Self.DiscordUser" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LoginClip" EntityType="Self.LoginClip" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RamActivityLog" EntityType="Self.RamActivityLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RamErrorLog" EntityType="Self.RamErrorLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RamLinks" EntityType="Self.RamLinks" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RamUser" EntityType="Self.RamUser" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TeamSpeakLocalUser" EntityType="Self.TeamSpeakLocalUser" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TeamSpeakRam" EntityType="Self.TeamSpeakRam" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TeamSpeakUser" EntityType="Self.TeamSpeakUser" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__ClipUse__Rid__4F7CD00D" Association="Self.FK__ClipUse__Rid__4F7CD00D">
+            <End Role="RamUser" EntitySet="RamUser" />
+            <End Role="ClipUse" EntitySet="ClipUse" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CommandUse__Rid__5070F446" Association="Self.FK__CommandUse__Rid__5070F446">
+            <End Role="RamUser" EntitySet="RamUser" />
+            <End Role="CommandUse" EntitySet="CommandUse" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DiscordUser__Rid__534D60F1" Association="Self.FK__DiscordUser__Rid__534D60F1">
+            <End Role="RamUser" EntitySet="RamUser" />
+            <End Role="DiscordUser" EntitySet="DiscordUser" />
+          </AssociationSet>
+          <AssociationSet Name="FK__LoginClip__Rid__5165187F" Association="Self.FK__LoginClip__Rid__5165187F">
+            <End Role="RamUser" EntitySet="RamUser" />
+            <End Role="LoginClip" EntitySet="LoginClip" />
+          </AssociationSet>
+          <AssociationSet Name="FK__RamActivity__Rid__52593CB8" Association="Self.FK__RamActivity__Rid__52593CB8">
+            <End Role="RamUser" EntitySet="RamUser" />
+            <End Role="RamActivityLog" EntitySet="RamActivityLog" />
+          </AssociationSet>
+          <AssociationSet Name="FK__RamLinks__Rid__5441852A" Association="Self.FK__RamLinks__Rid__5441852A">
+            <End Role="RamUser" EntitySet="RamUser" />
+            <End Role="RamLinks" EntitySet="RamLinks" />
+          </AssociationSet>
+          <AssociationSet Name="FK__RamLinks__RidLin__5535A963" Association="Self.FK__RamLinks__RidLin__5535A963">
+            <End Role="RamUser" EntitySet="RamUser" />
+            <End Role="RamLinks" EntitySet="RamLinks" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TeamSpeakLo__Uid__5BE2A6F2" Association="Self.FK__TeamSpeakLo__Uid__5BE2A6F2">
+            <End Role="TeamSpeakUser" EntitySet="TeamSpeakUser" />
+            <End Role="TeamSpeakLocalUser" EntitySet="TeamSpeakLocalUser" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TeamSpeakUs__Rid__4E88ABD4" Association="Self.FK__TeamSpeakUs__Rid__4E88ABD4">
+            <End Role="RamUser" EntitySet="RamUser" />
+            <End Role="TeamSpeakUser" EntitySet="TeamSpeakUser" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="RAMBOTModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ClipUse">
+          <Key>
+            <PropertyRef Name="Rid" />
+            <PropertyRef Name="ClipName" />
+          </Key>
+          <Property Name="Rid" Type="Guid" Nullable="false" />
+          <Property Name="ClipName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Count" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="RamUser" Relationship="Self.FK__ClipUse__Rid__37A5467C" FromRole="ClipUse" ToRole="RamUser" />
+        </EntityType>
+        <EntityType Name="CommandUse">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Rid" Type="Guid" Nullable="false" />
+          <Property Name="Time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Command" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="arg" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="argCount" Type="Int32" />
+          <NavigationProperty Name="RamUser" Relationship="Self.FK__CommandUse__Rid__38996AB5" FromRole="CommandUse" ToRole="RamUser" />
+        </EntityType>
+        <EntityType Name="DiscordRam">
+          <Key>
+            <PropertyRef Name="did" />
+          </Key>
+          <Property Name="did" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="username" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DiscordUser">
+          <Key>
+            <PropertyRef Name="did" />
+          </Key>
+          <Property Name="did" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Rid" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="RamUser" Relationship="Self.FK__DiscordUser__Rid__4316F928" FromRole="DiscordUser" ToRole="RamUser" />
+        </EntityType>
+        <EntityType Name="LoginClip">
+          <Key>
+            <PropertyRef Name="Rid" />
+          </Key>
+          <Property Name="Rid" Type="Guid" Nullable="false" />
+          <Property Name="ClipName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="RamUser" Relationship="Self.FK__LoginClip__Rid__398D8EEE" FromRole="LoginClip" ToRole="RamUser" />
+        </EntityType>
+        <EntityType Name="RamActivityLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Rid" Type="Guid" Nullable="false" />
+          <Property Name="Time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Activity" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Param" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="By" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="RamUser" Relationship="Self.FK__RamActivity__Rid__3A81B327" FromRole="RamActivityLog" ToRole="RamUser" />
+        </EntityType>
+        <EntityType Name="RamLink">
+          <Key>
+            <PropertyRef Name="Rid" />
+            <PropertyRef Name="RidLink" />
+          </Key>
+          <Property Name="Rid" Type="Guid" Nullable="false" />
+          <Property Name="RidLink" Type="Guid" Nullable="false" />
+          <Property Name="IsBound" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="RamUser" Relationship="Self.FK__RamLinks__Rid__440B1D61" FromRole="RamLinks" ToRole="RamUser" />
+          <NavigationProperty Name="RamUser1" Relationship="Self.FK__RamLinks__RidLin__44FF419A" FromRole="RamLinks" ToRole="RamUser" />
+        </EntityType>
+        <EntityType Name="RamUser">
+          <Key>
+            <PropertyRef Name="Rid" />
+          </Key>
+          <Property Name="Rid" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" a:SetterAccess="Private" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
+          <Property Name="ServerId" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ClipUses" Relationship="Self.FK__ClipUse__Rid__37A5467C" FromRole="RamUser" ToRole="ClipUse" />
+          <NavigationProperty Name="CommandUses" Relationship="Self.FK__CommandUse__Rid__38996AB5" FromRole="RamUser" ToRole="CommandUse" />
+          <NavigationProperty Name="DiscordUsers" Relationship="Self.FK__DiscordUser__Rid__4316F928" FromRole="RamUser" ToRole="DiscordUser" />
+          <NavigationProperty Name="LoginClip" Relationship="Self.FK__LoginClip__Rid__398D8EEE" FromRole="RamUser" ToRole="LoginClip" />
+          <NavigationProperty Name="RamActivityLogs" Relationship="Self.FK__RamActivity__Rid__3A81B327" FromRole="RamUser" ToRole="RamActivityLog" />
+          <NavigationProperty Name="RamLinks" Relationship="Self.FK__RamLinks__Rid__440B1D61" FromRole="RamUser" ToRole="RamLinks" />
+          <NavigationProperty Name="RamLinks1" Relationship="Self.FK__RamLinks__RidLin__44FF419A" FromRole="RamUser" ToRole="RamLinks" />
+          <NavigationProperty Name="TeamSpeakUsers" Relationship="Self.FK__TeamSpeakUs__Rid__3B75D760" FromRole="RamUser" ToRole="TeamSpeakUser" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="TeamSpeakRam">
+          <Key>
+            <PropertyRef Name="tsuid" />
+          </Key>
+          <Property Name="tsuid" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="username" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TeamSpeakUser">
+          <Key>
+            <PropertyRef Name="TSuid" />
+          </Key>
+          <Property Name="Rid" Type="Guid" Nullable="false" />
+          <Property Name="TSuid" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TSlid" Type="Int32" />
+          <NavigationProperty Name="RamUser" Relationship="Self.FK__TeamSpeakUs__Rid__3B75D760" FromRole="TeamSpeakUser" ToRole="RamUser" />
+          <Property Name="Nickname" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TeamSpeakLocalUsers" Relationship="RAMBOTModel.FK__TeamSpeakLo__Uid__5812160E" FromRole="TeamSpeakUser" ToRole="TeamSpeakLocalUser" />
+        </EntityType>
+        <Association Name="FK__ClipUse__Rid__37A5467C">
+          <End Role="RamUser" Type="Self.RamUser" Multiplicity="1" />
+          <End Role="ClipUse" Type="Self.ClipUse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RamUser">
+              <PropertyRef Name="Rid" />
+            </Principal>
+            <Dependent Role="ClipUse">
+              <PropertyRef Name="Rid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CommandUse__Rid__38996AB5">
+          <End Role="RamUser" Type="Self.RamUser" Multiplicity="1" />
+          <End Role="CommandUse" Type="Self.CommandUse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RamUser">
+              <PropertyRef Name="Rid" />
+            </Principal>
+            <Dependent Role="CommandUse">
+              <PropertyRef Name="Rid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DiscordUser__Rid__4316F928">
+          <End Role="RamUser" Type="Self.RamUser" Multiplicity="1" />
+          <End Role="DiscordUser" Type="Self.DiscordUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RamUser">
+              <PropertyRef Name="Rid" />
+            </Principal>
+            <Dependent Role="DiscordUser">
+              <PropertyRef Name="Rid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__LoginClip__Rid__398D8EEE">
+          <End Role="RamUser" Type="Self.RamUser" Multiplicity="1" />
+          <End Role="LoginClip" Type="Self.LoginClip" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="RamUser">
+              <PropertyRef Name="Rid" />
+            </Principal>
+            <Dependent Role="LoginClip">
+              <PropertyRef Name="Rid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__RamActivity__Rid__3A81B327">
+          <End Role="RamUser" Type="Self.RamUser" Multiplicity="1" />
+          <End Role="RamActivityLog" Type="Self.RamActivityLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RamUser">
+              <PropertyRef Name="Rid" />
+            </Principal>
+            <Dependent Role="RamActivityLog">
+              <PropertyRef Name="Rid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__RamLinks__Rid__440B1D61">
+          <End Role="RamUser" Type="Self.RamUser" Multiplicity="1" />
+          <End Role="RamLinks" Type="Self.RamLink" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RamUser">
+              <PropertyRef Name="Rid" />
+            </Principal>
+            <Dependent Role="RamLinks">
+              <PropertyRef Name="Rid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__RamLinks__RidLin__44FF419A">
+          <End Role="RamUser" Type="Self.RamUser" Multiplicity="1" />
+          <End Role="RamLinks" Type="Self.RamLink" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RamUser">
+              <PropertyRef Name="Rid" />
+            </Principal>
+            <Dependent Role="RamLinks">
+              <PropertyRef Name="RidLink" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TeamSpeakUs__Rid__3B75D760">
+          <End Role="RamUser" Type="Self.RamUser" Multiplicity="1" />
+          <End Role="TeamSpeakUser" Type="Self.TeamSpeakUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RamUser">
+              <PropertyRef Name="Rid" />
+            </Principal>
+            <Dependent Role="TeamSpeakUser">
+              <PropertyRef Name="Rid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="RAMBOTEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ClipUses" EntityType="Self.ClipUse" />
+          <EntitySet Name="CommandUses" EntityType="Self.CommandUse" />
+          <EntitySet Name="DiscordRams" EntityType="Self.DiscordRam" />
+          <EntitySet Name="DiscordUsers" EntityType="Self.DiscordUser" />
+          <EntitySet Name="LoginClips" EntityType="Self.LoginClip" />
+          <EntitySet Name="RamActivityLogs" EntityType="Self.RamActivityLog" />
+          <EntitySet Name="RamLinks" EntityType="Self.RamLink" />
+          <EntitySet Name="RamUsers" EntityType="Self.RamUser" />
+          <EntitySet Name="TeamSpeakRams" EntityType="Self.TeamSpeakRam" />
+          <EntitySet Name="TeamSpeakUsers" EntityType="Self.TeamSpeakUser" />
+          <AssociationSet Name="FK__ClipUse__Rid__37A5467C" Association="Self.FK__ClipUse__Rid__37A5467C">
+            <End Role="RamUser" EntitySet="RamUsers" />
+            <End Role="ClipUse" EntitySet="ClipUses" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CommandUse__Rid__38996AB5" Association="Self.FK__CommandUse__Rid__38996AB5">
+            <End Role="RamUser" EntitySet="RamUsers" />
+            <End Role="CommandUse" EntitySet="CommandUses" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DiscordUser__Rid__4316F928" Association="Self.FK__DiscordUser__Rid__4316F928">
+            <End Role="RamUser" EntitySet="RamUsers" />
+            <End Role="DiscordUser" EntitySet="DiscordUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__LoginClip__Rid__398D8EEE" Association="Self.FK__LoginClip__Rid__398D8EEE">
+            <End Role="RamUser" EntitySet="RamUsers" />
+            <End Role="LoginClip" EntitySet="LoginClips" />
+          </AssociationSet>
+          <AssociationSet Name="FK__RamActivity__Rid__3A81B327" Association="Self.FK__RamActivity__Rid__3A81B327">
+            <End Role="RamUser" EntitySet="RamUsers" />
+            <End Role="RamActivityLog" EntitySet="RamActivityLogs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__RamLinks__Rid__440B1D61" Association="Self.FK__RamLinks__Rid__440B1D61">
+            <End Role="RamUser" EntitySet="RamUsers" />
+            <End Role="RamLinks" EntitySet="RamLinks" />
+          </AssociationSet>
+          <AssociationSet Name="FK__RamLinks__RidLin__44FF419A" Association="Self.FK__RamLinks__RidLin__44FF419A">
+            <End Role="RamUser" EntitySet="RamUsers" />
+            <End Role="RamLinks" EntitySet="RamLinks" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TeamSpeakUs__Rid__3B75D760" Association="Self.FK__TeamSpeakUs__Rid__3B75D760">
+            <End Role="RamUser" EntitySet="RamUsers" />
+            <End Role="TeamSpeakUser" EntitySet="TeamSpeakUsers" />
+          </AssociationSet>
+          <EntitySet Name="TeamSpeakLocalUsers" EntityType="RAMBOTModel.TeamSpeakLocalUser" />
+          <AssociationSet Name="FK__TeamSpeakLo__Uid__5812160E" Association="RAMBOTModel.FK__TeamSpeakLo__Uid__5812160E">
+            <End Role="TeamSpeakUser" EntitySet="TeamSpeakUsers" />
+            <End Role="TeamSpeakLocalUser" EntitySet="TeamSpeakLocalUsers" />
+          </AssociationSet>
+          <EntitySet Name="RamErrorLogs" EntityType="RAMBOTModel.RamErrorLog" />
+        </EntityContainer>
+        <EntityType Name="TeamSpeakLocalUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Uid" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TeamSpeakUser" Relationship="RAMBOTModel.FK__TeamSpeakLo__Uid__5812160E" FromRole="TeamSpeakLocalUser" ToRole="TeamSpeakUser" />
+        </EntityType>
+        <Association Name="FK__TeamSpeakLo__Uid__5812160E">
+          <End Type="RAMBOTModel.TeamSpeakUser" Role="TeamSpeakUser" Multiplicity="1" />
+          <End Type="RAMBOTModel.TeamSpeakLocalUser" Role="TeamSpeakLocalUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TeamSpeakUser">
+              <PropertyRef Name="TSuid" />
+            </Principal>
+            <Dependent Role="TeamSpeakLocalUser">
+              <PropertyRef Name="Uid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="RamErrorLog">
+          <Key>
+            <PropertyRef Name="time" />
+          </Key>
+          <Property Name="time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="stack" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="message" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="by" Type="Guid" Nullable="false" />
+          <Property Name="line" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ramName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="serverId" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="RAMBOTModelStoreContainer" CdmEntityContainer="RAMBOTEntities">
+          <EntitySetMapping Name="ClipUses">
+            <EntityTypeMapping TypeName="RAMBOTModel.ClipUse">
+              <MappingFragment StoreEntitySet="ClipUse">
+                <ScalarProperty Name="Rid" ColumnName="Rid" />
+                <ScalarProperty Name="ClipName" ColumnName="ClipName" />
+                <ScalarProperty Name="Count" ColumnName="Count" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CommandUses">
+            <EntityTypeMapping TypeName="RAMBOTModel.CommandUse">
+              <MappingFragment StoreEntitySet="CommandUse">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Rid" ColumnName="Rid" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="Command" ColumnName="Command" />
+                <ScalarProperty Name="arg" ColumnName="arg" />
+                <ScalarProperty Name="argCount" ColumnName="argCount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DiscordRams">
+            <EntityTypeMapping TypeName="RAMBOTModel.DiscordRam">
+              <MappingFragment StoreEntitySet="DiscordRam">
+                <ScalarProperty Name="did" ColumnName="did" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="password" ColumnName="password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DiscordUsers">
+            <EntityTypeMapping TypeName="RAMBOTModel.DiscordUser">
+              <MappingFragment StoreEntitySet="DiscordUser">
+                <ScalarProperty Name="did" ColumnName="did" />
+                <ScalarProperty Name="Rid" ColumnName="Rid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LoginClips">
+            <EntityTypeMapping TypeName="RAMBOTModel.LoginClip">
+              <MappingFragment StoreEntitySet="LoginClip">
+                <ScalarProperty Name="Rid" ColumnName="Rid" />
+                <ScalarProperty Name="ClipName" ColumnName="ClipName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RamActivityLogs">
+            <EntityTypeMapping TypeName="RAMBOTModel.RamActivityLog">
+              <MappingFragment StoreEntitySet="RamActivityLog">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Rid" ColumnName="Rid" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="Activity" ColumnName="Activity" />
+                <ScalarProperty Name="Param" ColumnName="Param" />
+                <ScalarProperty Name="By" ColumnName="By" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RamLinks">
+            <EntityTypeMapping TypeName="RAMBOTModel.RamLink">
+              <MappingFragment StoreEntitySet="RamLinks">
+                <ScalarProperty Name="Rid" ColumnName="Rid" />
+                <ScalarProperty Name="RidLink" ColumnName="RidLink" />
+                <ScalarProperty Name="IsBound" ColumnName="IsBound" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RamUsers">
+            <EntityTypeMapping TypeName="RAMBOTModel.RamUser">
+              <MappingFragment StoreEntitySet="RamUser">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Rid" ColumnName="Rid" />
+                <ScalarProperty Name="ServerId" ColumnName="ServerId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TeamSpeakRams">
+            <EntityTypeMapping TypeName="RAMBOTModel.TeamSpeakRam">
+              <MappingFragment StoreEntitySet="TeamSpeakRam">
+                <ScalarProperty Name="tsuid" ColumnName="tsuid" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TeamSpeakUsers">
+            <EntityTypeMapping TypeName="RAMBOTModel.TeamSpeakUser">
+              <MappingFragment StoreEntitySet="TeamSpeakUser">
+                <ScalarProperty Name="Nickname" ColumnName="Nickname" />
+                <ScalarProperty Name="Rid" ColumnName="Rid" />
+                <ScalarProperty Name="TSuid" ColumnName="TSuid" />
+                <ScalarProperty Name="TSlid" ColumnName="TSlid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TeamSpeakLocalUsers">
+            <EntityTypeMapping TypeName="RAMBOTModel.TeamSpeakLocalUser">
+              <MappingFragment StoreEntitySet="TeamSpeakLocalUser">
+                <ScalarProperty Name="Uid" ColumnName="Uid" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RamErrorLogs">
+            <EntityTypeMapping TypeName="RAMBOTModel.RamErrorLog">
+              <MappingFragment StoreEntitySet="RamErrorLog">
+                <ScalarProperty Name="serverId" ColumnName="serverId" />
+                <ScalarProperty Name="ramName" ColumnName="ramName" />
+                <ScalarProperty Name="line" ColumnName="line" />
+                <ScalarProperty Name="by" ColumnName="by" />
+                <ScalarProperty Name="message" ColumnName="message" />
+                <ScalarProperty Name="stack" ColumnName="stack" />
+                <ScalarProperty Name="time" ColumnName="time" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

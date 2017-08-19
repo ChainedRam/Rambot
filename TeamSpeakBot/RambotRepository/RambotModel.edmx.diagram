@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="bb2c35f853c54e12a0159667a17f9082" Name="Diagram1">
+        <EntityTypeShape EntityType="RAMBOTModel.ClipUse" Width="1.5" PointX="3" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAMBOTModel.CommandUse" Width="1.5" PointX="3" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAMBOTModel.DiscordRam" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAMBOTModel.DiscordUser" Width="1.5" PointX="3" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAMBOTModel.LoginClip" Width="1.5" PointX="3" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAMBOTModel.RamActivityLog" Width="1.5" PointX="3" PointY="12.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAMBOTModel.RamLink" Width="1.5" PointX="3" PointY="15.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAMBOTModel.RamUser" Width="1.5" PointX="0.75" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAMBOTModel.TeamSpeakRam" Width="1.5" PointX="5.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RAMBOTModel.TeamSpeakUser" Width="1.5" PointX="3" PointY="17.875" IsExpanded="true" />
+        <AssociationConnector Association="RAMBOTModel.FK__ClipUse__Rid__37A5467C" ManuallyRouted="false" />
+        <AssociationConnector Association="RAMBOTModel.FK__CommandUse__Rid__38996AB5" ManuallyRouted="false" />
+        <AssociationConnector Association="RAMBOTModel.FK__DiscordUser__Rid__4316F928" ManuallyRouted="false" />
+        <AssociationConnector Association="RAMBOTModel.FK__LoginClip__Rid__398D8EEE" ManuallyRouted="false" />
+        <AssociationConnector Association="RAMBOTModel.FK__RamActivity__Rid__3A81B327" ManuallyRouted="false" />
+        <AssociationConnector Association="RAMBOTModel.FK__RamLinks__Rid__440B1D61" ManuallyRouted="false" />
+        <AssociationConnector Association="RAMBOTModel.FK__RamLinks__RidLin__44FF419A" ManuallyRouted="false" />
+        <AssociationConnector Association="RAMBOTModel.FK__TeamSpeakUs__Rid__3B75D760" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="RAMBOTModel.TeamSpeakLocalUser" Width="1.5" PointX="5.25" PointY="18.125" />
+        <AssociationConnector Association="RAMBOTModel.FK__TeamSpeakLo__Uid__5812160E" />
+        <EntityTypeShape EntityType="RAMBOTModel.RamErrorLog" Width="1.5" PointX="5.375" PointY="6.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
