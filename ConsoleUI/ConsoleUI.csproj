@@ -84,16 +84,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\GenericBot Interface\Core Interface.csproj">
-      <Project>{83cf8119-40b6-4a1b-bcec-b3651cc09106}</Project>
-      <Name>Core Interface</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\GenericBot\Core Implementation.csproj">
-      <Project>{be96f209-5706-4476-8dd9-cccf104af685}</Project>
-      <Name>Core Implementation</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

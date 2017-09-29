@@ -82,7 +82,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GenericBot Interface\Core Interface.csproj">
+    <ProjectReference Include="..\Core Interface\Core Interface.csproj">
       <Project>{83CF8119-40B6-4A1B-BCEC-B3651CC09106}</Project>
       <Name>Core Interface</Name>
     </ProjectReference>

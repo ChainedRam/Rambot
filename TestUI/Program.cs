@@ -1,16 +1,8 @@
 ﻿using KLD.TeamSpeak.Core;
 using Rambot.Core.Impl;
 using Rambot.Core.Interface;
-using RambotRepository;
 using Rambot.Core.Util;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Speech.Synthesis;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace TestUI
 {

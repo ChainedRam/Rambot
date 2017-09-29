@@ -98,17 +98,17 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Core Utility\Core Utility.csproj">
-      <Project>{19FA8CAC-C117-464B-9BC2-5B5BB70D32D0}</Project>
-      <Name>Core Utility</Name>
+    <ProjectReference Include="..\Core Implementation\Core Implementation.csproj">
+      <Project>{BE96F209-5706-4476-8DD9-CCCF104AF685}</Project>
+      <Name>Core Implementation</Name>
     </ProjectReference>
-    <ProjectReference Include="..\GenericBot Interface\Core Interface.csproj">
+    <ProjectReference Include="..\Core Interface\Core Interface.csproj">
       <Project>{83CF8119-40B6-4A1B-BCEC-B3651CC09106}</Project>
       <Name>Core Interface</Name>
     </ProjectReference>
-    <ProjectReference Include="..\GenericBot\Core Implementation.csproj">
-      <Project>{BE96F209-5706-4476-8DD9-CCCF104AF685}</Project>
-      <Name>Core Implementation</Name>
+    <ProjectReference Include="..\Core Utility\Core Utility.csproj">
+      <Project>{19FA8CAC-C117-464B-9BC2-5B5BB70D32D0}</Project>
+      <Name>Core Utility</Name>
     </ProjectReference>
     <ProjectReference Include="..\RambotRepository\RambotRepository.csproj">
       <Project>{83534DF0-CF46-490B-9BF2-3AF60EA8F758}</Project>
