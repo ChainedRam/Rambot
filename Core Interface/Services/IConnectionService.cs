@@ -1,11 +1,7 @@
-﻿using Rambot.Core.Impl.Events;
+﻿using KLDev.Rambot.Core.Events;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Rambot.Core.Interface
+namespace KLDev.Rambot.Interface
 {
     public interface IConnectionService : IRamService
     {
@@ -13,10 +9,13 @@ namespace Rambot.Core.Interface
         string ServerName { get; }
         #endregion
         #region Methods
+
         bool Login(string[] args);
+        bool Logout(); 
 
         void SendMessage(string msg);
         void SendPrivateMessage(string msg, Guid userId);
+
         #endregion
         #region Events 
         event Action<string> OnDisconnected;

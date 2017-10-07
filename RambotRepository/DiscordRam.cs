@@ -9,9 +9,7 @@
 
 namespace RambotRepository
 {
-    using System;
-    using System.Collections.Generic;
-    
+
     public partial class DiscordRam
     {
         public string did { get; set; }

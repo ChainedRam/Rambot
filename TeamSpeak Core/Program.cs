@@ -1,14 +1,7 @@
 ﻿using KLD.TeamSpeak.Console;
-using KLD.TeamSpeak.Core;
-using Rambot.Core.Impl;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace KLD.TeamSpeak.Core

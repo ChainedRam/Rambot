@@ -1,9 +1,10 @@
 ﻿using System.IO;
 
-namespace Rambot.Core.Impl
+namespace KLDev.Rambot.Core
 {
     public class Loader
     {
+        /* rip 
         private static Loader instnece; 
 
         public static Loader Instence
@@ -71,5 +72,7 @@ namespace Rambot.Core.Impl
                 return null;
             }
         }
+    }
+    */
     }
 }

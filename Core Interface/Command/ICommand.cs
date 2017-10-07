@@ -1,6 +1,7 @@
 ﻿using System;
 
-namespace Rambot.Core.Interface
+
+namespace KLDev.Rambot.Interface
 {
     /// <summary>
     /// An excutable 
@@ -25,7 +26,7 @@ namespace Rambot.Core.Interface
         /// <param name="invokerId"></param>
         /// <param name="bot"></param>
         /// <returns>response</returns>
-        string Execute(string line, Guid invokerId, IRambot bot);
+        string Execute(string line, Guid invokerId, IBot bot);
         #endregion
     }
 }

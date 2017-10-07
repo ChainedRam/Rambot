@@ -110,9 +110,9 @@
       <Project>{19FA8CAC-C117-464B-9BC2-5B5BB70D32D0}</Project>
       <Name>Core Utility</Name>
     </ProjectReference>
-    <ProjectReference Include="..\RambotRepository\RambotRepository.csproj">
+    <ProjectReference Include="..\RambotRepository\Rambot Repository.csproj">
       <Project>{83534DF0-CF46-490B-9BF2-3AF60EA8F758}</Project>
-      <Name>RambotRepository</Name>
+      <Name>Rambot Repository</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,11 +1,8 @@
-﻿using Rambot.Core.Impl.Events;
+﻿using KLDev.Rambot.Core.Events;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Rambot.Core.Interface
+namespace KLDev.Rambot.Interface
 {
     public interface IDataService : IRamService
     {
@@ -30,7 +27,7 @@ namespace Rambot.Core.Interface
 
         IEnumerable<string> GetUserUsedSounds(Guid rid);
         void LogClipPlayed(string clipName, Guid by);
-        void LogError(Exception e, string line, Guid by, IRambot ram);
+        void LogError(Exception e, string line, Guid by, IBot ram);
         #endregion
     }
 }

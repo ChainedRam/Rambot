@@ -1,11 +1,8 @@
-﻿using Rambot.Core.Interface;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Rambot.Core.Impl.Events;
-using Rambot.Core.Interface.Enum;
+using KLDev.Rambot.Interface;
+using KLDev.Rambot.Core.Enum;
+using KLDev.Rambot.Core.Events;
 
 namespace KLD.TeamSpeak.Repository
 {
@@ -151,7 +148,7 @@ namespace KLD.TeamSpeak.Repository
             throw new NotImplementedException();
         }
 
-        public void LogError(Exception e, string line, Guid by, IRambot ram)
+        public void LogError(Exception e, string line, Guid by, IBot ram)
         {
             throw new NotImplementedException();
         }

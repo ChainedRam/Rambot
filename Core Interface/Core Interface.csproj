@@ -7,8 +7,8 @@
     <ProjectGuid>{83CF8119-40B6-4A1B-BCEC-B3651CC09106}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Rambot.Core.Interface</RootNamespace>
-    <AssemblyName>RambotCoreInterface</AssemblyName>
+    <RootNamespace>KLDev.Rambot.Interface</RootNamespace>
+    <AssemblyName>RambotInterface</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
@@ -49,14 +49,16 @@
     <Compile Include="Enum\Enum.cs" />
     <Compile Include="Events\EventsArgs.cs" />
     <Compile Include="Command\IAliasedCommand.cs" />
+    <Compile Include="Services\IIdentityService.cs" />
     <Compile Include="Services\IClipPlayer.cs" />
     <Compile Include="Services\ICommandService.cs" />
     <Compile Include="Services\IConnectionService.cs" />
     <Compile Include="Services\IDataSource.cs" />
-    <Compile Include="IRambot.cs" />
+    <Compile Include="Bot\IBot.cs" />
     <Compile Include="Command\ICommand.cs" />
+    <Compile Include="Services\ILogService.cs" />
     <Compile Include="Services\IRamService.cs" />
-    <Compile Include="IRamUser.cs" />
+    <Compile Include="Bot\IRamUser.cs" />
     <Compile Include="Command\IRegexCommand.cs" />
     <Compile Include="Services\IClipCollectionService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

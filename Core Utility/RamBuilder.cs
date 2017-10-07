@@ -1,18 +1,14 @@
-﻿using Rambot.Core.Interface;
+﻿using KLDev.Rambot.Interface;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Rambot.Core.Util
 {
-    public class RamBuilder : IRambot
+    public class RamBuilder : IBot
     {
         #region Services  
         public IClipCollectionService ClipCollection { get; private set; }
 
-        public IClipPlayer ClipPlayer { get; private set; }
+        public IClipPlayerService ClipPlayer { get; private set; }
 
         public ICommandService CommandService { get; private set; }
 
@@ -26,9 +22,25 @@ namespace Rambot.Core.Util
         public int Id { get; private set; }
 
         public string Name { get; private set; }
+
+        public IIdentityService IdentityService
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public ILogService LogService
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
         #endregion
         #region Methods 
-        public void AddService<T>(T service, bool forceOverride = false) where T : IRamService
+        public void AddServices<T>(T service, bool forceOverride = false) where T : IRamService
         {
             throw new NotImplementedException();
         }
@@ -38,7 +50,7 @@ namespace Rambot.Core.Util
             throw new NotImplementedException();
         }
 
-        void IRambot.InstantiateService<T>(bool forceOverride)
+        void IBot.InstantiateService<T>(bool forceOverride)
         {
             throw new NotImplementedException();
         }
@@ -55,7 +67,7 @@ namespace Rambot.Core.Util
             return this; 
         }
 
-        public RamBuilder WithClipPlayerService(IClipPlayer c)
+        public RamBuilder WithClipPlayerService(IClipPlayerService c)
         {
             ClipPlayer = c;
             return this;

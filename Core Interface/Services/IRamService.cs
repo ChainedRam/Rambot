@@ -1,12 +1,7 @@
-﻿using Rambot.Core.Interface.Enum;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using KLDev.Rambot.Core.Enum;
 
-namespace Rambot.Core.Interface
-{ 
+namespace KLDev.Rambot.Interface
+{
     /// <summary>
     /// It isi what it is
     /// </summary>

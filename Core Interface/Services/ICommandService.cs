@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Rambot.Core.Interface
+namespace KLDev.Rambot.Interface
 {
     public interface ICommandService : IRamService
     {
@@ -16,7 +12,7 @@ namespace Rambot.Core.Interface
         /// <summary>
         /// a string that indecates a command 
         /// </summary>
-        string CommandInvoker { get; }
+        string InvokeIndecation { get; }
 
         /// <summary>
         /// Invokes a line
@@ -25,7 +21,7 @@ namespace Rambot.Core.Interface
         /// <param name="by"></param>
         /// <param name="ram"></param>
         /// <returns></returns>
-        string InvokeCommand(string line, Guid by, IRambot ram);
+        string InvokeCommand(string line, Guid by, IBot ram);
 
         IDescriptiveCommand[] ListCommands();
 

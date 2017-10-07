@@ -1,17 +1,10 @@
 ﻿using Discord;
 using Discord.Audio;
-using Discord.Net.Rest;
 using NAudio.Wave;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
 using System.Speech.AudioFormat;
 using System.Speech.Synthesis;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace TestFramework
 {

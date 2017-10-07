@@ -1,8 +1,7 @@
 namespace KLD.TeamSpeak.Repository
 {
-    using System;
     using System.Data.Entity.Migrations;
-    
+
     public partial class Whatdidichange : DbMigration
     {
         public override void Up()

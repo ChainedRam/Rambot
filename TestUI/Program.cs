@@ -1,6 +1,5 @@
-﻿using KLD.TeamSpeak.Core;
-using Rambot.Core.Impl;
-using Rambot.Core.Interface;
+﻿using KLDev.Rambot.Core;
+using KLDev.Rambot.Interface;
 using Rambot.Core.Util;
 using System;
 
@@ -14,7 +13,6 @@ namespace TestUI
         [STAThread]
         static void Main()
         {
-
             Console.WriteLine("END");
             Console.ReadKey(); 
         }
@@ -68,7 +66,7 @@ namespace TestUI
 
             string line1 = "Line 1 (Virtual Audio Cable)";
 
-            IRambot ram = RamBuilder.Create()
+            IBot ram = RamBuilder.Create()
                 .WithClipCollectionService(new LocalClipCollection("C:\\Ram\\SoundCollection"))
                 .WithClipPlayerService(new LocalDeviceClipPlayer(speakers))
                 .WithTextToSpeechService(new LocalTextToSpeechService(speakers));

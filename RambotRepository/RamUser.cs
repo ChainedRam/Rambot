@@ -9,9 +9,8 @@
 
 namespace RambotRepository
 {
-    using System;
     using System.Collections.Generic;
-    
+
     public partial class RamUser
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]

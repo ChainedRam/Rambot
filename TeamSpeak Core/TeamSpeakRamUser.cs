@@ -1,9 +1,5 @@
-﻿using Rambot.Core.Interface;
+﻿using KLDev.Rambot.Interface;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TeamSpeakBot
 {

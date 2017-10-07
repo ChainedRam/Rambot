@@ -9,9 +9,7 @@
 
 namespace RambotRepository
 {
-    using System;
-    using System.Collections.Generic;
-    
+
     public partial class RamLink
     {
         public System.Guid Rid { get; set; }

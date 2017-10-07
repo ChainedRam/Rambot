@@ -1,11 +1,6 @@
-﻿using Rambot.Core.Interface;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using KLDev.Rambot.Interface;
 
-namespace Rambot.Core.Impl.Events
+namespace KLDev.Rambot.Core.Events
 {
     public class UserJoinedChannelEventArgs
     {

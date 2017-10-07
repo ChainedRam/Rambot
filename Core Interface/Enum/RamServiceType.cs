@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Rambot.Core.Interface.Enum
+﻿namespace KLDev.Rambot.Core.Enum
 {
     public enum RamServiceType
     {
@@ -36,7 +30,9 @@ namespace Rambot.Core.Interface.Enum
        /// <summary>
        /// Able to convert text to sound 
        /// </summary>
-       TextToSpeech = 32,  
+       TextToSpeech = 32,
+        Identity = 64,
+        Logger = 128,
     }; 
 
 }

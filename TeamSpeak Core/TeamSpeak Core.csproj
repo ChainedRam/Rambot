@@ -66,9 +66,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controller\BotConsoleController.cs" />
-    <Compile Include="Impl\Bot\TeamSpeakBot.cs" />
-    <Compile Include="Impl\Executable\Event\LoginSoundEvent.cs" />
+    <Compile Include="BotConsoleController.cs" />
+    <Compile Include="TeamSpeakConnectionService.cs" />
+    <Compile Include="LoginSoundEvent.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TeamSpeakRamUser.cs" />
@@ -95,9 +95,9 @@
       <Project>{BE96F209-5706-4476-8DD9-CCCF104AF685}</Project>
       <Name>Core Implementation</Name>
     </ProjectReference>
-    <ProjectReference Include="..\RambotRepository\RambotRepository.csproj">
+    <ProjectReference Include="..\RambotRepository\Rambot Repository.csproj">
       <Project>{83534DF0-CF46-490B-9BF2-3AF60EA8F758}</Project>
-      <Name>RambotRepository</Name>
+      <Name>Rambot Repository</Name>
     </ProjectReference>
     <ProjectReference Include="..\TeamSpeak3QueryApi\TeamSpeak3QueryApi.csproj">
       <Project>{5e319cf3-6546-42b5-b9c2-e67d8e2c0d2d}</Project>
@@ -108,14 +108,7 @@
       <Name>TeamSpeak Repository</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Impl\Executable\Command\" />
-    <Folder Include="TeamSpeakBin\cmd\" />
-    <Folder Include="TeamSpeakBin\evnt\0\" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Service References\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,11 +1,10 @@
-﻿using Rambot.Core.Interface;
+﻿using KLDev.Rambot.Core.Events;
+using KLDev.Rambot.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Rambot.Core.Impl.Events;
-using Rambot.Core.Interface.Enum;
+using KLDev.Rambot.Core.Enum;
 
 namespace RambotRepository
 {
@@ -174,7 +173,7 @@ namespace RambotRepository
 
 
         private object LogErrorLock = new object();
-        public void LogError(Exception e, string line, Guid by, IRambot ram)
+        public void LogError(Exception e, string line, Guid by, IBot ram)
         {
             lock (LogErrorLock)
             {
@@ -185,8 +184,8 @@ namespace RambotRepository
                     message = e.Message,
                     line = line, 
                     by = by, 
-                    ramName = ram.Name, 
-                    serverId = ram.ConnectionService?.ServerName             
+                    ramName = ram.IdentityService?.Name?? "Unknown", 
+                    serverId = ram.ConnectionService?.ServerName?? "Unknown"            
                 }; 
 
                 Rambot.RamErrorLogs.Add(err);
