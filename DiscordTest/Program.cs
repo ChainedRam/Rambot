@@ -96,7 +96,7 @@ namespace TestFramework
                     Debug.WriteLine("channel: " + channel.Name);
 
                     //Channel to join to
-                    if (channel.Name == "General")
+                    if (channel.Name == "Dorper")
                     {
                         GeneralChannel = channel; 
                         Debug.WriteLine("Got service!");
@@ -209,7 +209,7 @@ namespace TestFramework
         {
             //Debug.WriteLine("Update : " + e.Before.Name);
 
-            if (e.After.VoiceChannel != null  && e.After.VoiceChannel.Name == "General" && e.Before.VoiceChannel?.Name != "General")
+            if (e.After.VoiceChannel != null  && e.After.VoiceChannel.Name == "Dorper" && e.Before.VoiceChannel?.Name != "Dorper")
             {
                 Say("Welcome " + e.After.Name);
             }
