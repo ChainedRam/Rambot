@@ -452,19 +452,22 @@ namespace KLD.TeamSpeak.Core
                 ///set text message event 
                 client.Subscribe<TextMessage>(data => data.ForEach(c =>
                 {
+
+                    if(c.InvokerId == whoAmI.ClientId)
+                    {
+                        //return; 
+                    }
                     //if (c.InvokerUid == BotUid || RamNames.Contains(c.InvokerName))
                     //{
                     //    return;
                     //}
-                    Debug.WriteLine(c.InvokerName + ": " + c.Message);
+                    //Debug.WriteLine(c.InvokerName + ": " + c.Message);
 
                     //TeamSpeakRamUser tsRam = new TeamSpeakRamUser() { Uid = c.InvokerUid, Id = c.InvokerId, Name = c.InvokerName };
                     //tsRam.Rid = MapUserToRid(tsRam);
 
                     //UserSentText(new UserSentTextToChannelEventArgs() { RamUser = tsRam, Text = c.Message });
-                    UserSentText(new UserSentTextToChannelEventArgs() { RamUser = null, Text = c.Message });
-
-
+                    UserSentText?.Invoke(new UserSentTextToChannelEventArgs() { RamUser = null, Text = c.Message });
 
                     //SendPrivateMessage(tsRam.Rid, "You wrote: " + c.Message); 
                 }
@@ -524,11 +527,15 @@ namespace KLD.TeamSpeak.Core
 
                     //DataSource.LogUserConnectedToServer(new UserJoinedServerEventArgs() { RamUser = tsRam });
                 }*/
-                
+
 
                 //var channels = await client.GetChannels();
 
-            }).Wait();  
+                await client.SendChannelMessage("Hello", channelId);
+
+            }).Wait();
+
+      
 
             return true; 
         }

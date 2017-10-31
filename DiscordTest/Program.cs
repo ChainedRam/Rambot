@@ -1,10 +1,12 @@
 ﻿using Discord;
 using Discord.Audio;
 using NAudio.Wave;
+using System;
 using System.Diagnostics;
 using System.Speech.AudioFormat;
 using System.Speech.Synthesis;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace TestFramework
 {
@@ -48,7 +50,6 @@ namespace TestFramework
 
         static DiscordClient botClient;
         static IAudioClient client;
-        static Channel cch;
 
         static void Discord0_9_6()
         {
@@ -83,8 +84,12 @@ namespace TestFramework
 
                 foreach (var channel in chainedRam.TextChannels)
                 {
-                    cch = channel;
+                    if(channel.Name == "general")
+                    {
+                        //await channel.SendMessage("Time to sleep. I'll be back within 20 hours.");
+                    }
                 }
+                Channel GeneralChannel = null; 
                 foreach (var channel in chainedRam.VoiceChannels)
                 {
                     var serv = botClient.GetService<AudioService>();
@@ -93,9 +98,16 @@ namespace TestFramework
                     //Channel to join to
                     if (channel.Name == "General")
                     {
+                        GeneralChannel = channel; 
                         Debug.WriteLine("Got service!");
+                        try
+                        {
+                            client = await serv.Join(channel);
+                        }
+                        catch (Exception e)
+                        {
 
-                        client = await serv.Join(channel);
+                        }
                         Thread.Sleep(500);
 
                         Debug.WriteLine("Joined: " + channel.Name + "  " + serv.Config.Channels);
@@ -104,22 +116,34 @@ namespace TestFramework
                 }
 
                 //Adding event listener 
-                //c.JoinedServer += C_JoinedServer;
-                //c.UserLeft += C_UserLeft;
-                //c.UserUpdated += C_UserUpdated;
-                //c.UserJoined += C_UserJoined;
+                botClient.JoinedServer += C_JoinedServer;
+                botClient.UserLeft += C_UserLeft;
+                botClient.UserUpdated += C_UserUpdated;
 
-                botClient.UserIsTyping += C_UserIsTyping;
+                botClient.UserJoined += C_UserJoined;
+
+              
+                //botClient.UserIsTyping += C_UserIsTyping;
 
                 botClient.MessageUpdated += BotClient_MessageUpdated;
                 botClient.MessageReceived += BotClient_MessageReceived;
 
                 Debug.WriteLine("Lock and loaded!");
-                while (true) ;
-                Debug.WriteLine("Stopped");
 
+                int i = 0; 
+                while (true)
+                {
+                    var serv = botClient.GetService<AudioService>();
+                    botClient.SetGame(new Game("Botting " + i++));
+                    Debug.WriteLine("Setting Game");
+                    client = await serv.Join(GeneralChannel);
+                    Thread.Sleep(60 * 1000); //5 minutes 
+                }
+
+                Debug.WriteLine("Stopped");
             });
 
+           
         }
 
         static string voice = "";
@@ -130,70 +154,41 @@ namespace TestFramework
 
             if (e.Message.RawText.StartsWith("!say "))
             {
-                using (SpeechSynthesizer s = new SpeechSynthesizer())
-                {
-                    s.Volume = 100;
+                string speach = e.Message.RawText.Substring("!say ".Length);
 
-                    if (!string.IsNullOrEmpty(voice))
-                    {
-                        s.SelectVoice(voice);
-                    }
-
-                    s.SetOutputToWaveFile("temp.wav", new SpeechAudioFormatInfo(48000, AudioBitsPerSample.Sixteen, AudioChannel.Stereo));
-
-
-
-                    string speach = e.Message.RawText.Substring("!say ".Length);
-                    s.Speak(speach);
-                }
-
-                using (var MP3Reader = new WaveFileReader("temp.wav"))
-                {
-                    MP3Reader.Seek(0, System.IO.SeekOrigin.Begin);
-
-                    var serv = botClient.GetService<AudioService>();
-
-                    WaveFormat OutFormat = new WaveFormat(48000, 16, serv.Config.Channels);
-                    int blockSize = OutFormat.AverageBytesPerSecond;
-                    byte[] buffer = new byte[blockSize];
-                    using (var resampler = new MediaFoundationResampler(MP3Reader, OutFormat))
-
-                    {
-                        resampler.ResamplerQuality = 60;
-
-                        int byteCount;
-                        while ((byteCount = resampler.Read(buffer, 0, blockSize)) > 0)
-                        {
-                            if (byteCount < blockSize)
-                            {
-                                for (int i = byteCount; i < blockSize; i++)
-                                {
-                                    buffer[i] = 0;
-                                }
-                            }
-                            client.Send(buffer, 0, blockSize);
-                        }
-                    }
-                }
-
+                Say(speach); 
             }
             else if (e.Message.RawText.StartsWith("!voice list"))
             {
+                string build = ""; 
                 using (SpeechSynthesizer s = new SpeechSynthesizer())
                 {
-                    cch.SendMessage("Available voices: ");
+                    build += "Available voices: \n";
                     foreach (var v in s.GetInstalledVoices())
                     {
-                        cch.SendMessage(v.VoiceInfo.Name);
+                        build +=  (v.VoiceInfo.Name + "\n");
                     }
-                    cch.SendMessage("End of voices available.");
+                    build += ("End of voices available.");
+
                 }
+               e.Channel.SendMessage(build); 
             }
             else if (e.Message.RawText.StartsWith("!voice set "))
             {
-                string speach = e.Message.RawText.Substring("!voice set ".Length);
-
-                voice = speach;
+                string voiceName = e.Message.RawText.Substring("!voice set ".Length);
+                using (SpeechSynthesizer s = new SpeechSynthesizer())
+                {
+                    foreach (var v in s.GetInstalledVoices())
+                    {
+                        if(v.VoiceInfo.Name == voiceName)
+                        {
+                            voice = voiceName;
+                            e.Channel.SendMessage("Voice is set");
+                            return; 
+                        }
+                    }
+                }
+                e.Channel.SendMessage("Voice doesn't exist.");
             }
 
         }
@@ -206,11 +201,18 @@ namespace TestFramework
         private static void C_JoinedServer(object sender, ServerEventArgs e)
         {
             Debug.WriteLine("JoinedServer : " + e.Server);
+
+            
         }
 
         private static void C_UserUpdated(object sender, UserUpdatedEventArgs e)
         {
-            Debug.WriteLine("Update : " + e.Before.Name);
+            //Debug.WriteLine("Update : " + e.Before.Name);
+
+            if (e.After.VoiceChannel != null  && e.After.VoiceChannel.Name == "General" && e.Before.VoiceChannel?.Name != "General")
+            {
+                Say("Welcome " + e.After.Name);
+            }
         }
 
         private static void C_UserLeft(object sender, UserEventArgs e)
@@ -227,6 +229,58 @@ namespace TestFramework
         private static void C_UserJoined(object sender, UserEventArgs e)
         {
             Debug.WriteLine("Joined : " + e.User.Name);
+        }
+
+
+        private static void Say(string speech)
+        {
+            using (SpeechSynthesizer s = new SpeechSynthesizer())
+            {
+                s.Volume = 100;
+
+                if (!string.IsNullOrEmpty(voice))
+                {
+                    s.SelectVoice(voice);
+                }
+
+                s.SetOutputToWaveFile("temp.wav", new SpeechAudioFormatInfo(48000, AudioBitsPerSample.Sixteen, AudioChannel.Stereo));
+
+                s.Speak(speech);
+            }
+
+            using (var MP3Reader = new WaveFileReader("temp.wav"))
+            {
+                int offset = voice.StartsWith("Cepstral") ? 1173560 : 0;
+
+                Debug.WriteLine("Length " + MP3Reader.Length);
+
+                MP3Reader.Seek(offset, System.IO.SeekOrigin.Begin);
+
+                var serv = botClient.GetService<AudioService>();
+
+                WaveFormat OutFormat = new WaveFormat(48000, 16, serv.Config.Channels);
+
+                int blockSize = OutFormat.AverageBytesPerSecond;
+                byte[] buffer = new byte[blockSize];
+
+                using (var resampler = new MediaFoundationResampler(MP3Reader, OutFormat))
+                {
+                    resampler.ResamplerQuality = 60;
+
+                    int byteCount;
+                    while ((byteCount = resampler.Read(buffer, 0, blockSize)) > 0)
+                    {
+                        if (byteCount < blockSize)
+                        {
+                            for (int i = byteCount; i < blockSize; i++)
+                            {
+                                buffer[i] = 0;
+                            }
+                        }
+                        client.Send(buffer, 0, blockSize);
+                    }
+                }
+            }
         }
     }
 }
