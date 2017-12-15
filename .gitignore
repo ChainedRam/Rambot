@@ -289,3 +289,6 @@ __pycache__/
 
 # Config files 
 *App.config
+
+# Old files for keeping old projects 
+/Old/*
