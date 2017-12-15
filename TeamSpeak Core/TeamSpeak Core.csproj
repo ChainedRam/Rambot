@@ -64,6 +64,14 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="TentacleSoftware.TeamSpeakQuery, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\TentacleSoftware.TeamSpeakQuery.1.0.3.0\lib\net45\TentacleSoftware.TeamSpeakQuery.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="TentacleSoftware.Telnet, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\TentacleSoftware.Telnet.1.0.3.0\lib\net45\TentacleSoftware.Telnet.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BotConsoleController.cs" />
@@ -98,10 +106,6 @@
     <ProjectReference Include="..\RambotRepository\Rambot Repository.csproj">
       <Project>{83534DF0-CF46-490B-9BF2-3AF60EA8F758}</Project>
       <Name>Rambot Repository</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TeamSpeak3QueryApi\TeamSpeak3QueryApi.csproj">
-      <Project>{5e319cf3-6546-42b5-b9c2-e67d8e2c0d2d}</Project>
-      <Name>TeamSpeak3QueryApi</Name>
     </ProjectReference>
     <ProjectReference Include="..\TeamSpeakRepository\TeamSpeak Repository.csproj">
       <Project>{71780db7-aaf7-4668-937e-b49b5f0bc2f8}</Project>

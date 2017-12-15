@@ -30,7 +30,7 @@ namespace TestFramework
 
             botClient.MessageReceived += MessageRecieved; 
 
-            await botClient.LoginAsync(TokenType.Bot, "MzI2NjEyODA5NTA3MDEyNjE4.DCpVeg.rLzQZbdzABjGAfAisDAPF86f29c");
+            await botClient.LoginAsync(TokenType.Bot, ConfigurationManager.AppSettings["botToken"]);
 
             await botClient.StartAsync();
 
@@ -113,7 +113,7 @@ namespace TestFramework
                         {
                             client = await serv.Join(channel);
                         }
-                        catch (Exception e)
+                        catch (Exception)
                         {
                             Debug.WriteLine("Can't talk");
                         }
@@ -149,7 +149,7 @@ namespace TestFramework
                     Thread.Sleep(60 * 1000); //5 minutes 
                 }
 
-                Debug.WriteLine("Stopped");
+                //Debug.WriteLine("Stopped");
             });
 
            

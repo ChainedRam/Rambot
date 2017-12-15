@@ -97,10 +97,6 @@
       <Project>{83CF8119-40B6-4A1B-BCEC-B3651CC09106}</Project>
       <Name>Core Interface</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TeamSpeak3QueryApi\TeamSpeak3QueryApi.csproj">
-      <Project>{5E319CF3-6546-42B5-B9C2-E67D8E2C0D2D}</Project>
-      <Name>TeamSpeak3QueryApi</Name>
-    </ProjectReference>
     <ProjectReference Include="..\TeamSpeakRepository\TeamSpeak Repository.csproj">
       <Project>{71780DB7-AAF7-4668-937E-B49B5F0BC2F8}</Project>
       <Name>TeamSpeak Repository</Name>
