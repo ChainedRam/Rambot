@@ -16,6 +16,7 @@ using System.Speech.AudioFormat;
 using System.Speech.Synthesis;
 using NAudio.Wave;
 using Discord.Commands.Builders;
+using System.Configuration;
 
 namespace DiscordTest102
 {
@@ -39,7 +40,7 @@ namespace DiscordTest102
             _commands = new CommandService();
 
             // Avoid hard coding your token. Use an external source instead in your code.
-            string token = "MzI2NjEyODA5NTA3MDEyNjE4.DCpVeg.rLzQZbdzABjGAfAisDAPF86f29c";
+            string token = ConfigurationManager.AppSettings["botToken"];
 
             _services = new ServiceCollection()
                 .AddSingleton(_client)

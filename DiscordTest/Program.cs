@@ -2,6 +2,7 @@
 using Discord.Audio;
 using NAudio.Wave;
 using System;
+using System.Configuration;
 using System.Diagnostics;
 using System.Speech.AudioFormat;
 using System.Speech.Synthesis;
@@ -14,7 +15,7 @@ namespace TestFramework
     //From https://github.com/RogueException/Discord.Net/blob/dev/docs/guides/getting_started/samples/intro/
     class Program
     {
-        static void Main(string[] args)
+         static void Main(string[] args)
         {
             Discord0_9_6();
             //new Program().Discord1_0_2().GetAwaiter().GetResult();
@@ -50,6 +51,9 @@ namespace TestFramework
 
         static DiscordClient botClient;
         static IAudioClient client;
+        static string TargetVoiceChannelName;
+        static Channel TextChannel;
+        static Channel VoiceChannel;
 
         static void Discord0_9_6()
         {
@@ -64,7 +68,7 @@ namespace TestFramework
             botClient.ExecuteAndWait(async () =>
             {
                 //use you access token
-                await botClient.Connect("MzI2NjEyODA5NTA3MDEyNjE4.DCpVeg.rLzQZbdzABjGAfAisDAPF86f29c", TokenType.Bot);
+                await botClient.Connect(ConfigurationManager.AppSettings["botToken"], TokenType.Bot);
 
                 Thread.Sleep(500);
 
@@ -84,21 +88,26 @@ namespace TestFramework
 
                 foreach (var channel in chainedRam.TextChannels)
                 {
-                    if(channel.Name == "general")
+                    if(channel.Name == "dev-general")
                     {
+                        TextChannel = channel; 
                         //await channel.SendMessage("Time to sleep. I'll be back within 20 hours.");
                     }
                 }
-                Channel GeneralChannel = null; 
+
+                TargetVoiceChannelName = "Texel"; 
+
+                Channel TargetChannel = null; 
                 foreach (var channel in chainedRam.VoiceChannels)
                 {
                     var serv = botClient.GetService<AudioService>();
                     Debug.WriteLine("channel: " + channel.Name);
 
                     //Channel to join to
-                    if (channel.Name == "Dorper")
+                    if (channel.Name == TargetVoiceChannelName)
                     {
-                        GeneralChannel = channel; 
+                        TargetChannel = channel;
+                        VoiceChannel = channel; 
                         Debug.WriteLine("Got service!");
                         try
                         {
@@ -106,7 +115,7 @@ namespace TestFramework
                         }
                         catch (Exception e)
                         {
-
+                            Debug.WriteLine("Can't talk");
                         }
                         Thread.Sleep(500);
 
@@ -136,7 +145,7 @@ namespace TestFramework
                     var serv = botClient.GetService<AudioService>();
                     botClient.SetGame(new Game("Botting " + i++));
                     Debug.WriteLine("Setting Game");
-                    client = await serv.Join(GeneralChannel);
+                    client = await serv.Join(TargetChannel);
                     Thread.Sleep(60 * 1000); //5 minutes 
                 }
 
@@ -156,7 +165,7 @@ namespace TestFramework
             {
                 string speach = e.Message.RawText.Substring("!say ".Length);
 
-                Say(speach); 
+                Say(speach, VoiceChannel); 
             }
             else if (e.Message.RawText.StartsWith("!voice list"))
             {
@@ -209,10 +218,24 @@ namespace TestFramework
         {
             //Debug.WriteLine("Update : " + e.Before.Name);
 
-            if (e.After.VoiceChannel != null  && e.After.VoiceChannel.Name == "Dorper" && e.Before.VoiceChannel?.Name != "Dorper")
+            if (e.After.VoiceChannel != null  && e.After.VoiceChannel.Name == TargetVoiceChannelName && e.Before.VoiceChannel?.Name != TargetVoiceChannelName)
             {
-                Say("Welcome " + e.After.Name);
+                Say("Welcome " + e.After.Name, e.After.VoiceChannel);
             }
+
+            string build = "Update Event\n";
+
+            if(e.Before.Nickname != e.After.Nickname)
+            {
+                build += "Nickname was '" +  e.Before.Nickname + "' becomae '" + e.After.Nickname + "'\n"; 
+            }
+            if ((e.Before.CurrentGame?.Name?? "None") != (e.After.CurrentGame?.Name ?? "None"))
+            {
+                build += "CurrentGame was '" + (e.Before.CurrentGame?.Name?? "None") + "' becomae '" + (e.After.CurrentGame?.Name?? "None") + "'\n";
+            }
+
+
+            TextChannel.SendMessage(build); 
         }
 
         private static void C_UserLeft(object sender, UserEventArgs e)
@@ -232,7 +255,7 @@ namespace TestFramework
         }
 
 
-        private static void Say(string speech)
+        private async static void Say(string speech, Channel target)
         {
             using (SpeechSynthesizer s = new SpeechSynthesizer())
             {
@@ -257,7 +280,8 @@ namespace TestFramework
                 MP3Reader.Seek(offset, System.IO.SeekOrigin.Begin);
 
                 var serv = botClient.GetService<AudioService>();
-
+                var voiceClient = await serv.Join(target);
+                
                 WaveFormat OutFormat = new WaveFormat(48000, 16, serv.Config.Channels);
 
                 int blockSize = OutFormat.AverageBytesPerSecond;
