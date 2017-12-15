@@ -15,9 +15,7 @@
       </dependentAssembly>
     </assemblyBinding>
   </runtime>
-  <configuration>
-    <appSettings>
-      <add key="botToken" value="your token here" />
-    </appSettings>
-  </configuration>
+  <appSettings>
+    <add key="botToken" value="your token here" />
+  </appSettings>
 </configuration>

@@ -17,9 +17,11 @@ namespace TestFramework
     {
          static void Main(string[] args)
         {
-            Discord0_9_6();
+
+            throw new Exception("This is no longer supported."); //Rip
+            //Discord0_9_6();
             //new Program().Discord1_0_2().GetAwaiter().GetResult();
-            Debug.WriteLine("Ended");
+            //Debug.WriteLine("Ended");
         }
 
         /* 
